@@ -8,7 +8,7 @@ Author: Yassine Abouzia
 License: GPL v2 or later
 */
 
-class MetaTagGenius
+class MetaTagsGenius
 {
 
     public function __construct()
