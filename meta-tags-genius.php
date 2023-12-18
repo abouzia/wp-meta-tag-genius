@@ -78,4 +78,4 @@ class MetaTagsGenius
     }
 }
 
-new MetaTagGenius();
+new MetaTagsGenius();
