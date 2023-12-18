@@ -1,6 +1,6 @@
-# Meta Tag Genius
+# Meta Tags Genius
 
-Meta Tag Genius is a WordPress plugin that allows you to manage and customize meta tags for your website.
+Meta Tags Genius is a WordPress plugin that allows you to manage and customize meta tags for your website.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Meta Tag Genius is a WordPress plugin that allows you to manage and customize me
 
 ## Usage
 
-1. Navigate to the "Meta Tag Genius" page in the WordPress admin menu.
+1. Navigate to the "Meta Tags Genius" page in the WordPress admin menu.
 2. Customize your meta tags and settings.
 3. Save changes.
 
