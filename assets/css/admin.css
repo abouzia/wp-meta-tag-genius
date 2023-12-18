@@ -1,0 +1,29 @@
+.mtg-container h1,
+.mtg-container h2,
+.mtg-container h3,
+.mtg-container h4,
+.mtg-container h5,
+.mtg-container h6 {
+  color: whitesmoke;
+}
+
+.mtg-container {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  max-width: 40%;
+  background-color: #141414;
+  color: whitesmoke;
+  text-align: center;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+form .mtg-form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
