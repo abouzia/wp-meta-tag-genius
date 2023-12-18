@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Meta Tag Genius
+Plugin Name: Meta Tags Genius
 Description: A powerful WordPress plugin for managing meta tags with ease.
 Version: 0.0.1
 Author: Yassine Abouzia
@@ -40,8 +40,8 @@ class MetaTagGenius
     function mtg_admin_menu()
     {
         add_menu_page(
-            'Meta Tag Genius',
-            'Meta Tag Genius',
+            'Meta Tags Genius',
+            'Meta Tags Genius',
             'manage_options',
             'mtg',
             array($this, 'mtg_options_page'),
@@ -58,7 +58,7 @@ class MetaTagGenius
         }
 
         $html = '<div class="mtg-container">';
-        $html .= '<h1 class="mtg-title">Meta Tag Genius</h1>';
+        $html .= '<h1 class="mtg-title">Meta Tags Genius</h1>';
         $html .= "<h2>Welcome</h2>";
         $html .= '<form method="post" action="admin-post.php">';
         $html .= '<input type="hidden" name="action" value="mtg_save_action">';
