@@ -22,17 +22,17 @@ class MetaTagsGenius
         add_action('admin_menu', array($this, 'mtg_admin_menu'));
     }
 
-    
+
 
     public function activate()
     {
         $this->mtg_get_options();
     }
-    
+
     function mtg_get_options()
     {
         $mtg_options = get_option('mtg_meta_tags_options', []);
-        
+
         if (empty($mtg_options)) {
             $defaults = [
                 'author' => 'dummy author tag.',
@@ -63,7 +63,7 @@ class MetaTagsGenius
 
         // Check if nonce is valid
         check_admin_referer('mtg_save_action', 'mtg_nonce');
-        
+
         // check if all post values not empty
         if (empty($_POST['mtg_author_input']) || empty($_POST['mtg_content_input'])) {
             wp_die(__('Please fill all the fields.'));
@@ -80,7 +80,15 @@ class MetaTagsGenius
         update_option('mtg_meta_tags_options', $updated_options);
 
         // redirect to options page
-        wp_redirect(admin_url('admin.php?page=mtg'));
+        wp_redirect(
+            add_query_arg(
+                [
+                    'page' => 'mtg',
+                    'saved' => 'true',
+                ],
+                admin_url('admin.php')
+            )
+        );
         exit;
     }
 
@@ -124,7 +132,9 @@ class MetaTagsGenius
         $html .= '<label for="mtg_content_input">';
         $html .= 'Meta Conent: ';
         $html .= '</label>';
-        $html .=  "<input type='text' id='mtg_content_input' name='mtg_content_input' value='$content'>";
+        $html .= "<textarea id='mtg_content_input' name='mtg_content_input' rows='4' cols='50'>";
+        $html .= $content;
+        $html .= '</textarea>';
         $html .= '</div>';
 
         // save button
@@ -136,20 +146,37 @@ class MetaTagsGenius
         echo $html;
     }
 
-    function mtg_options_page() {
+    function mtg_dismissible_message($message) {
+
+        $html = '<div id="message" class="updated notice is-dismissible">';
+        $html .= "<p>$message</p>";
+        $html .= '</div>';
+
+        echo $html;
+    }
+
+    function mtg_options_page()
+    {
 
         // check if user can access this page
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
-        
+
+
+        // check if saved 
+        if (isset($_GET['saved'])) {
+            $this->mtg_dismissible_message('Settings saved.');
+        } else {
+            $this->mtg_dismissible_message('Setting not saved.');
+        }
+
         // get meta tags options
         $meta_tags_options = get_option('mtg_meta_tags_options');
 
         // show meta tags options page
         $this->mtg_meta_tags_options_html($meta_tags_options);
     }
-    
 }
 
 
