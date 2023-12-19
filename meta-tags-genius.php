@@ -20,6 +20,9 @@ class MetaTagsGenius
         add_action('admin_enqueue_scripts', array($this, 'mgt_admin_enqueue_scripts'));
         add_action('admin_init', array($this, 'mtg_admin_init'));
         add_action('admin_menu', array($this, 'mtg_admin_menu'));
+
+        // Add meta tags to the head
+        add_action('wp_head', array($this, 'mtg_meta_tags_to_head'), 99);
     }
 
 
@@ -47,6 +50,14 @@ class MetaTagsGenius
     function mgt_admin_enqueue_scripts()
     {
         wp_enqueue_style('mtg_admin_style', plugins_url('assets/css/admin.css', __FILE__));
+    }
+
+    function mtg_meta_tags_to_head()
+    {
+        $mtg_options = $this->mtg_get_options();
+        extract($mtg_options);
+        echo "<meta name='author' content='$author'>";
+        echo "<meta name='description' content='$content'>";
     }
 
     function mtg_admin_init()
@@ -77,14 +88,14 @@ class MetaTagsGenius
             'author' => sanitize_text_field($mtg_author_input),
             'content' => sanitize_text_field($mtg_content_input)
         ];
-        update_option('mtg_meta_tags_options', $updated_options);
+        $is_updated = update_option('mtg_meta_tags_options', $updated_options);
 
         // redirect to options page
         wp_redirect(
             add_query_arg(
                 [
                     'page' => 'mtg',
-                    'saved' => 'true',
+                    'updated' => $is_updated ? 'true' : 'false',
                 ],
                 admin_url('admin.php')
             )
@@ -146,7 +157,8 @@ class MetaTagsGenius
         echo $html;
     }
 
-    function mtg_dismissible_message($message) {
+    function mtg_dismissible_message($message)
+    {
 
         $html = '<div id="message" class="updated notice is-dismissible">';
         $html .= "<p>$message</p>";
@@ -164,11 +176,9 @@ class MetaTagsGenius
         }
 
 
-        // check if saved 
-        if (isset($_GET['saved'])) {
+        // check if saved
+        if ( isset($_GET['updated']) && $_GET['updated'] == 'true') {
             $this->mtg_dismissible_message('Settings saved.');
-        } else {
-            $this->mtg_dismissible_message('Setting not saved.');
         }
 
         // get meta tags options
